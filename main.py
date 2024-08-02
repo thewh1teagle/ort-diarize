@@ -7,8 +7,8 @@
 # python3 main.py
 
 from segment import get_segments
-from embedding_manager import SpeakerEmbeddingManager
-from extractor import EmbeddingExtractor
+from identify import SpeakerEmbeddingManager
+from extract import EmbeddingExtractor
 from common import read_wav
 
 if __name__ == '__main__':
