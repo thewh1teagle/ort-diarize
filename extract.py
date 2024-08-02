@@ -3,10 +3,6 @@ import torch
 import torchaudio.compliance.kaldi as kaldi
 from common import init_session
 
-
-def cosine_similarity(a, b):
-    return np.dot(a, b)/(np.linalg.norm(a)*np.linalg.norm(b))
-
 def compute_fbank(samples,
                   sample_rate,
                   num_mel_bins=80,

@@ -1,10 +1,3 @@
-# python3 -m venv venv 
-# source venv/bin/activate
-# pip3 install onnxruntime numpy librosa
-# wget https://github.com/pengzhendong/pyannote-onnx/blob/master/pyannote_onnx/segmentation-3.0.onnx
-# wget https://github.com/thewh1teagle/sherpa-rs/releases/download/v0.1.0/motivation.wav -Otest.wav
-# python3 main.py
-
 import numpy as np
 from common import init_session, read_wav
 
