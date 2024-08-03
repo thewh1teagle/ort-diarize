@@ -2,3 +2,4 @@ venv/
 *.onnx
 *.wav
 .DS_Store
+__pycache__/
