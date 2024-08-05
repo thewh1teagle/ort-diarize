@@ -17,11 +17,12 @@ if __name__ == '__main__':
     samples, sample_rate = read_wav('5_speakers.wav')
     
     num_speakers = 5
-    embedding_manager = SpeakerEmbeddingManager(num_speakers)
+    
     extractor = EmbeddingExtractor('wespeaker_en_voxceleb_CAM++.onnx')
     segments = get_segments('segmentation-3.0.onnx', samples, sample_rate)
     
     print('--- Pytorch kaldi fbank ---')
+    embedding_manager = SpeakerEmbeddingManager(num_speakers)
     for segment in segments:
         start_sample = int(segment['start'] * sample_rate)
         end_sample = int(segment['end'] * sample_rate)
@@ -36,6 +37,7 @@ if __name__ == '__main__':
         print(segment)
         
     print('--- Native fbank ---')
+    embedding_manager = SpeakerEmbeddingManager(num_speakers)
     for segment in segments:
         start_sample = int(segment['start'] * sample_rate)
         end_sample = int(segment['end'] * sample_rate)
