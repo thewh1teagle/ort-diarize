@@ -1,7 +1,7 @@
 """
 python3 -m venv venv 
 source venv/bin/activate
-pip install onnxruntime numpy librosa torch torchvision torchaudio
+pip install onnxruntime numpy librosa torch torchvision torchaudio kaldi-native-fbank
 wget https://github.com/pengzhendong/pyannote-onnx/raw/master/pyannote_onnx/segmentation-3.0.onnx
 wget https://github.com/k2-fsa/sherpa-onnx/releases/download/speaker-recongition-models/wespeaker_en_voxceleb_CAM++.onnx
 wget https://github.com/thewh1teagle/sherpa-rs/releases/download/v0.1.0/5_speakers.wav
@@ -20,11 +20,27 @@ if __name__ == '__main__':
     embedding_manager = SpeakerEmbeddingManager(num_speakers)
     extractor = EmbeddingExtractor('wespeaker_en_voxceleb_CAM++.onnx')
     segments = get_segments('segmentation-3.0.onnx', samples, sample_rate)
+    
+    print('--- Pytorch kaldi fbank ---')
     for segment in segments:
         start_sample = int(segment['start'] * sample_rate)
         end_sample = int(segment['end'] * sample_rate)
         segment_samples = samples[start_sample:end_sample]
-        embedding = extractor.compute(segment_samples, sample_rate)
+        embedding = extractor.compute(segment_samples, sample_rate, use_native_fbank=False)
+
+        speaker = embedding_manager.get_speaker(embedding, threshold=0.5)
+        if not speaker and len(embedding_manager.get_all_speakers()):
+            speaker = embedding_manager.get_speaker(embedding, threshold=0)
+            
+        segment['speaker'] = speaker
+        print(segment)
+        
+    print('--- Native fbank ---')
+    for segment in segments:
+        start_sample = int(segment['start'] * sample_rate)
+        end_sample = int(segment['end'] * sample_rate)
+        segment_samples = samples[start_sample:end_sample]
+        embedding = extractor.compute(segment_samples, sample_rate, use_native_fbank=True)
 
         speaker = embedding_manager.get_speaker(embedding, threshold=0.5)
         if not speaker and len(embedding_manager.get_all_speakers()):
