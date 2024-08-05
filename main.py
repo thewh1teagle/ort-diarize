@@ -36,7 +36,7 @@ if __name__ == '__main__':
         segment['speaker'] = speaker
         print(segment)
         
-    print('--- Native fbank ---')
+    print('--- Kaldi Native fbank ---')
     embedding_manager = SpeakerEmbeddingManager(num_speakers)
     for segment in segments:
         start_sample = int(segment['start'] * sample_rate)
