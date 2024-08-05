@@ -4,7 +4,7 @@ source venv/bin/activate
 pip install onnxruntime numpy librosa torch torchvision torchaudio
 wget https://github.com/pengzhendong/pyannote-onnx/raw/master/pyannote_onnx/segmentation-3.0.onnx
 wget https://github.com/k2-fsa/sherpa-onnx/releases/download/speaker-recongition-models/wespeaker_en_voxceleb_CAM++.onnx
-wget https://github.com/thewh1teagle/sherpa-rs/releases/download/v0.1.0/sam_altman.wav
+wget https://github.com/thewh1teagle/sherpa-rs/releases/download/v0.1.0/5_speakers.wav
 python3 main.py
 """
 
@@ -14,9 +14,9 @@ from extract import EmbeddingExtractor
 from common import read_wav
 
 if __name__ == '__main__':
-    samples, sample_rate = read_wav('sam_altman.wav')
+    samples, sample_rate = read_wav('5_speakers.wav')
     
-    num_speakers = 3
+    num_speakers = 5
     embedding_manager = SpeakerEmbeddingManager(num_speakers)
     extractor = EmbeddingExtractor('wespeaker_en_voxceleb_CAM++.onnx')
     segments = get_segments('segmentation-3.0.onnx', samples, sample_rate)
