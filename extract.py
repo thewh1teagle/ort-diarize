@@ -22,7 +22,10 @@ def compute_fbank_kaldi_native(samples: np.ndarray, sample_rate: int) -> np.ndar
         f = fbank.get_frame(i)
         features.append(f)
     features = np.stack(features, axis=0)
-
+    
+    # Apply CMN (Cepstral Mean Normalization)
+    features = features - np.mean(features, axis=0)
+    
     return features
 
 
